@@ -127,6 +127,15 @@ class core(object) :
 
         return DevidedMainText, point, ending_of_final_str
 
+    def HtmlCheck(word):
+        passFlag = False
+        for letter in TotalWord:
+            if letter == '<':
+                passFlag = True
+            elif letter == '>':
+                passFlag = False
+
+
     def SeekingWordOneWord(SeekingWord):      # whether SeekingWord is
         SeekingWord = SeekingWord.split()     # a one word
         flag = True
@@ -145,7 +154,8 @@ class core(object) :
 
     def ChangingCH(text):                                                # replacing control characters
         text = re.sub('\n', ' <br> ', text)
-        text = re.sub('\t', ' &nbsp;&nbsp;&nbsp;&nbsp; ', text)
+        text = re.sub('\t', ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', text)
+        text = re.sub('  ', ' &nbsp;&nbsp; ', text)
         return text
 
     def WipeSumbols(word):                                                      # wipes unnecessary symbols

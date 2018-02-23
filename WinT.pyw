@@ -35,7 +35,7 @@ class MyWindow(QtWidgets.QWidget):
         self.MainTextField = QTextEdit(self)
         self.MainTextField.zoomIn(3)
         self.MainTextField.setAcceptRichText(True)
-        self.MainTextField.setTabChangesFocus(False)
+        self.MainTextField.setTabStopDistance(40)
         self.SeekingWordTextField = QTextEdit(self)
         self.SeekingWordTextField.zoomIn(3)
         self.SeekingWordTextField.setAcceptRichText(True)
@@ -149,7 +149,7 @@ class MyWindow(QtWidgets.QWidget):
         Answer = None
         EndOfStroke = ''
         if self.HtmlSupport : MainText = core.ChangingCH(self.MainTextField.toHtml())
-        else: MainText = self.MainTextField.toPlainText()
+        else: MainText = core.ChangingCH(self.MainTextField.toPlainText())
         print(MainText)
         SeekingWord = self.SeekingWordTextField.toPlainText()
 
@@ -161,8 +161,6 @@ class MyWindow(QtWidgets.QWidget):
                 EndOfStroke = 's'
             self.StatusLabel.setText('<b>Empty field{}</b>'.format(EndOfStroke))
             return False
-
-        self.StatusLabel.setText('Preparing')
 
         DevidedMainText = core.DevidingText(self, MainText)
 
@@ -182,7 +180,7 @@ class MyWindow(QtWidgets.QWidget):
         FinishedText = ' '.join(Answer[0])
         print(FinishedText)
 
-        self.MainTextField.setText(FinishedText)
+        self.MainTextField.setHtml(FinishedText)
         self.StatusLabel.setText( 'Finished! Found %i entr%s' \
         % (len(SeekingWordsIntergers[0]) / Answer[1] , Answer[2]))
 
@@ -214,11 +212,10 @@ class AboutWindow(QtWidgets.QWidget):
                            QtCore.Qt.MSWindowsFixedSizeDialogHint)
 
         desktop = QtWidgets.QApplication.desktop()
-        size_of_window = QtCore.QSize(800, 550)
+        size_of_window = QtCore.QSize(600, 400)
         start_point = QtCore.QPoint((desktop.width() - size_of_window.width()) // 2 ,
                                     (desktop.height() - size_of_window.height()) // 2)
 
-        self.resize(200, 170)
         self.move(start_point)
         self.setWindowModality(2)
         self.setWindowTitle('About')
